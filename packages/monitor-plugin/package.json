@@ -1,0 +1,15 @@
+{
+	"name": "monitor-plugin",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"build": "esbuild ./src/index.ts --bundle --minify --format=iife --global-name=monitor --outfile=./build/out.js"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "MIT",
+	"devDependencies": {
+		"esbuild": "^0.14.51"
+	}
+}
