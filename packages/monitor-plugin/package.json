@@ -4,12 +4,13 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
-		"build": "esbuild ./src/index.ts --bundle --minify --format=iife --global-name=monitor --outfile=./build/out.js"
+		"build": "tsup ./src/index.ts --dts --format esm,iife --global-name monitor",
+		"dev": "tsup ./src/index.ts --dts --format esm,iife --global-name monitor --watch"
 	},
 	"keywords": [],
 	"author": "",
 	"license": "MIT",
 	"devDependencies": {
-		"esbuild": "^0.14.51"
+		"tsup": "^6.2.1"
 	}
 }
