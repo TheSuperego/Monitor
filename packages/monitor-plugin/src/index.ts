@@ -2,20 +2,6 @@ import { ReportData, addCache, getCache, clearCache, isCacheEmpty } from './cach
 import { randomUUID } from './utils'
 import load from './plugins'
 
-interface MonitorConfig {
-	url: string
-	reportInterval?: number
-}
-interface BoxedReportData {
-	sessionId: string
-	data: ReportData[]
-}
-
-interface Monitor {
-	report: ((data: ReportData, lazy?: boolean) => void) | (() => void)
-	init: (this: Monitor, config: MonitorConfig) => Monitor | void
-}
-
 const originalXMLSend = XMLHttpRequest.prototype.send
 const sendFunction: (url: string, data: BoxedReportData) => void = !!window.navigator?.sendBeacon
 	? (url, data) => window.navigator.sendBeacon(url, JSON.stringify(data))
@@ -25,10 +11,20 @@ const sendFunction: (url: string, data: BoxedReportData) => void = !!window.navi
 			originalXMLSend.call(xhr, JSON.stringify(data))
 	  }
 
-const monitor: Monitor = {
-	report: () => {},
-	init(this: Monitor, config: MonitorConfig) {
-		if (!config.url) {
+export {ReportData}
+export interface MonitorConfig {
+	url: string
+	reportInterval?: number
+}
+export interface BoxedReportData {
+	sessionId: string
+	data: ReportData[]
+}
+
+export let report: (data: ReportData, lazy?: boolean) => void
+
+export const init = (config: MonitorConfig) => {
+    if (!config.url) {
 			console.error('请设置上传 url 地址')
 			return
 		}
@@ -46,7 +42,7 @@ const monitor: Monitor = {
 			}
 		}
 
-		this.report = (data, lazy = true) => {
+		report = (data, lazy = true) => {
 			addCache(data)
 			if (!lazy) {
 				send()
@@ -58,13 +54,7 @@ const monitor: Monitor = {
 
 		window.addEventListener('beforeunload', send, true)
 
-		load(this.report)
+		load(report)
 
-        console.log('Web Monitor started!')
-
-		return this
-	}
+		console.log('Web Monitor started!')
 }
-
-
-module.exports = monitor
