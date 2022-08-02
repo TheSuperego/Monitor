@@ -1,10 +1,11 @@
 {
 	"name": "monitor",
-	"version": "1.0.0",
+	"version": "0.1.0",
+	"private": true,
 	"description": "",
 	"main": "index.js",
 	"scripts": {
-		"test": "pnpm --filter \"monitor-plugin\" build & pnpm --filter \"server\" start"
+		"test": "pnpm -F \"monitor-plugin\" build & pnpm -F \"server\" start"
 	},
 	"keywords": [],
 	"author": "",
