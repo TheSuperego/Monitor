@@ -1,14 +1,28 @@
 {
-	"name": "monitor-plugin",
-	"version": "1.0.0",
-	"description": "",
-	"main": "index.js",
+	"name": "@the-superego/monitor-plugin",
+	"version": "0.1.0",
+	"description": "web monitor plugin",
+	"main": "dist/index.global.js",
+	"module": "dist/index.mjs",
+	"types": "dist/index.d.ts",
 	"scripts": {
 		"build": "tsup ./src/index.ts --dts --format esm,iife --global-name monitor",
 		"dev": "tsup ./src/index.ts --dts --format esm,iife --global-name monitor --watch"
 	},
-	"keywords": [],
-	"author": "",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/TheSuperego/Monitor.git",
+		"directory": "packages/monitor-plugin"
+	},
+	"bugs": {
+		"url": "https://github.com/TheSuperego/Monitor/issues"
+	},
+	"keywords": [
+		"web",
+		"monitor",
+		"plugin"
+	],
+	"author": "The Superego",
 	"license": "MIT",
 	"devDependencies": {
 		"tsup": "^6.2.1"
