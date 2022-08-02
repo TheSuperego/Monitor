@@ -105,7 +105,6 @@ dist
 
 .DS_Store
 /dist
-build
 
 # local env files
 .env.local

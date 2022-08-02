@@ -22,8 +22,9 @@ pnpm t
 
 
 
-# 参考 / 致谢
+# 参考
 [ woai3c /
 monitor-demo ](https://github.com/woai3c/monitor-demo)
 
+[semver 语义化版本](https://semver.org/lang/zh-CN/)
 
