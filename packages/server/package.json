@@ -2,14 +2,9 @@
   "name": "server",
   "version": "0.1.0",
   "private": true,
-  "description": "",
-  "main": "index.js",
   "scripts": {
     "start": "ts-node server.ts"
   },
-  "keywords": [],
-  "author": "",
-  "license": "MIT",
   "dependencies": {
     "@koa/cors": "^3.3.0",
     "@koa/router": "^12.0.0",
