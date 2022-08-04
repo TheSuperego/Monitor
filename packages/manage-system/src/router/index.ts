@@ -1,40 +1,84 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
-import Home from '../components/Home/index.vue'
+import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
+
 
 const routes: Array<RouteRecordRaw> = [
-  {
-    path: '/',
-    name: 'home',
-    component: Home,
-    // 重定向 goods
-    redirect: "console",
-    children: [
-      {
+    {
+        // 00. 测试页面
+        path: "/",
+        name: "Root",
+        component: () => import('../views/HomePage.vue'),
+    },
+    {
+        // 00. 测试页面
+        path: "/echo",
+        name: "Echo",
+        component: () => import('../components/debug/Echo.vue'),
+    },
+    {
+        // 01. 主页面
+        path: "/homepage",
+        name: "HomePage",
+        component: () => import('../views/HomePage.vue'),
+    },
+    {
+        // 02. 网站详情
+        path: "/aboutpage",
+        name: "AboutPage",
+        component: () => import('../views/AboutPage.vue'),
+    },
+    {
+        // 04. 控制面板
         path: "/console",
-        name: "console",
-        meta: {
-          isShow: true,
-          title: "前端列表"
-        },
-        component: () => import('../views/ConsoleView/index.vue'),
-      },
-      {
+        name: "Console",
+        component: () => import('../views/console/index.vue'),
+    },
+    {
+        // 04. 图表
         path: "/chart",
-        name: "chart",
-        meta: {
-          isShow: true,
-          title: "前端监控报警规则"
-        },
-        component: () => import('../views/chartView/index.vue'),
-      },
-    ]
-  },
-
-]
+        name: "Chart",
+        component: () => import('../views/chart/index.vue'),
+    }
+];
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
-  routes
-})
+    history: createWebHistory(),
+    routes,
+});
 
-export default router
+export default router;
+
+
+// const routes: Array<RouteRecordRaw> = [
+//     {
+//         path: '/',
+//         name: 'home',
+//         component: Home,
+//         // 重定向 goods
+//         redirect: "console",
+//         children: [
+//             {
+//                 path: "/console",
+//                 name: "console",
+//                 meta: {
+//                     isShow: true,
+//                     title: "前端列表"
+//                 },
+//                 component: () => import('../views/ConsoleView/index.vue'),
+//             },
+//             {
+//                 path: "/chart",
+//                 name: "chart",
+//                 meta: {
+//                     isShow: true,
+//                     title: "前端监控报警规则"
+//                 },
+//                 component: () => import('../views/chartView/index.vue'),
+//             },
+//         ]
+//     },
+// ]
+// const router = createRouter({
+//     history: createWebHistory(process.env.BASE_URL),
+//     routes
+// })
+
