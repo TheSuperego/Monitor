@@ -1,0 +1,29 @@
+name: CI/CD
+on:
+  push:
+    branches: [main]
+    paths:
+      - packages/server/**
+      - .github/workflows/CICD.yaml
+  pull_request:
+    branches: [main]
+    paths:
+      - packages/server/**
+      - .github/workflows/CICD.yaml
+
+defaults:
+  run:
+    working-directory: packages/server
+
+jobs:
+  Server Automatic Deployment:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+      - run: npm i -g @serverless-devs/s
+      - run: npm i --production
+      - run: npm i esbuild -D
+      - run: npm run build
+      - run: s config add --AccessKeyID ${{secrets.AccessKeyID}} --AccessKeySecret ${{secrets.AccessKeySecret}} -a default -f
+      - run: s deploy -y --use-local

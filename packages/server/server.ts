@@ -1,7 +1,7 @@
-import Koa from 'koa'
-import Router from '@koa/router'
-import koaBody from 'koa-body'
-import cors from '@koa/cors'
+const Koa = require('koa')
+const Router = require('@koa/router')
+const cors = require('@koa/cors')
+const koaBody = require('koa-body')
 
 const app = new Koa()
 app.use(koaBody())
@@ -15,13 +15,18 @@ app.use(
 
 const router = new Router()
 
-router.post('/report', async (ctx) => {
-    const body = ctx.request.body
-    console.log(body)
+router.get('/', async (ctx) => {
+	ctx.body = 'qaq'
+})
 
-    ctx.status = 204
+router.post('/report', async (ctx) => {
+	const body = ctx.request.body
+	console.log(body)
+
+	ctx.status = 204
 })
 
 app.use(router.routes())
-app.listen(7021)
-
+app.listen(9000, () => {
+	console.log(`Server start on http://localhost:9000`)
+})
