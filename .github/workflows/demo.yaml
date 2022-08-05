@@ -3,6 +3,7 @@ on:
   push:
     paths:
       - packages/server/**
+      - .github/workflows/demo.yaml
 
 defaults:
   run:
