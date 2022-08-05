@@ -7,15 +7,17 @@ on:
       - '*.js'
       - .github/workflows/*.yaml
 
-defaults:
-  run:
-    working-directory: packages/server
+# defaults:
+#   run:
+#     working-directory: packages/server
 
 jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
     steps:
-      - run: ls -l
+      - run: |
+        pwd
+        ls -l
       # - run: echo 'success'
       # - name: Check out repository code
       #   uses: actions/checkout@v3
