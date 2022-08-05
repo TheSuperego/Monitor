@@ -3,9 +3,6 @@ on:
   push:
     paths:
       - packages/server/**
-      - '*.json'
-      - '*.js'
-      - .github/workflows/*.yaml
 
 defaults:
   run:
@@ -17,6 +14,14 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v3
-      - run: pwd
-      - run: ls -l
-      - run: echo 'success'
+      - uses: actions/setup-node@v3
+          with:
+            node-version: 16
+            cache: 'npm'
+            cache-dependency-path: package-lock.json
+      - run: npm i --production
+      - run: npm i esbuild -D
+      - run: npm run build
+      - run: npm i -g @serverless-devs/s
+      - run: s config add --AccessKeyID ${{secrets.AccessKeyID}} --AccessKeySecret ${{secrets.AccessKeySecret}} -a default -f
+      - run: s deploy -y --use-local
