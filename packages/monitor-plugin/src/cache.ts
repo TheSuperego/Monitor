@@ -3,7 +3,7 @@ import { deepCopy } from './utils'
 const cache: ReportData[] = []
 
 export interface ReportData {
-    [key: string]: any
+    [key: string]: unknown
 }
 
 export function getCache() {

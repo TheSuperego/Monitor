@@ -1,9 +1,6 @@
 import { ReportData } from './cache'
 
-export default function load(
-    report: (data: ReportData, lazy?: boolean) => void
-) {
-
+export default function load(report: (data: ReportData, lazy?: boolean) => void) {
     // 监控 js 错误
     window.onerror = (msg, url, line, column, error) => {
         report(
@@ -24,8 +21,8 @@ export default function load(
     // 监控资源异常
     window.addEventListener(
         'error',
-        e => {
-            const target = e.target as any
+        (e) => {
+            const target = e.target as HTMLImageElement & HTMLBaseElement
             if (!target) return
 
             if (target.src || target.href) {

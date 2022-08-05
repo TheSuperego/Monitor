@@ -2,7 +2,7 @@ let timer: number
 let setTimer: (callback: () => void, ms: number) => void
 let clearTimer: () => void
 
-if (!!window.requestIdleCallback) {
+if (window.requestIdleCallback) {
     setTimer = (callback, ms) => {
         timer = window.requestIdleCallback(callback, { timeout: ms })
     }
