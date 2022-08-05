@@ -16,7 +16,7 @@ defaults:
     working-directory: packages/server
 
 jobs:
-  Server Automatic Deployment:
+  Server-Automatic-Deployment:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository code
