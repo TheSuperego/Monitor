@@ -15,7 +15,7 @@ jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
     steps:
-      - run echo 'success'
+      - run: echo 'success'
       # - name: Check out repository code
       #   uses: actions/checkout@v3
       # - run: ls -l ${{ github.workspace }}
