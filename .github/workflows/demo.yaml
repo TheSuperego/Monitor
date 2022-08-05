@@ -15,10 +15,10 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v3
       - uses: actions/setup-node@v3
-          with:
-            node-version: 16
-            cache: 'npm'
-            cache-dependency-path: package-lock.json
+        with:
+          node-version: 16
+          cache: 'npm'
+          cache-dependency-path: package-lock.json
       - run: npm i --production
       - run: npm i esbuild -D
       - run: npm run build
