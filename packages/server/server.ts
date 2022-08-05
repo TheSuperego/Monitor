@@ -16,11 +16,11 @@ app.use(
 
 const router = new Router()
 
-router.get('/', async (ctx) => {
+router.get('/', async (ctx: any) => {
 	ctx.body = 'qaq'
 })
 
-router.post('/report', async (ctx) => {
+router.post('/report', async (ctx: any) => {
 	const body = ctx.request.body
 	console.log(body)
 

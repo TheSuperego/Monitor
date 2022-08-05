@@ -10,6 +10,7 @@
         <el-menu-item index="/chart">Chart</el-menu-item>
         <el-menu-item index="/echo">Echo</el-menu-item>
         <el-menu-item index="/console">Console</el-menu-item>
+        <el-menu-item index="/performance">Performance</el-menu-item>
         <div class="flex-grow"> </div>
     </el-menu>
     </div>
