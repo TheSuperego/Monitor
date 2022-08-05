@@ -16,8 +16,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: |
-        pwd
-        ls -l
+          pwd
+          ls -l
       # - run: echo 'success'
       # - name: Check out repository code
       #   uses: actions/checkout@v3
