@@ -30,7 +30,7 @@ export const init = (config: MonitorConfig) => {
     }
 
     const sessionId = randomUUID()
-
+    // 向服务端上报
     const send = () => {
         if (!isCacheEmpty()) {
             sendFunction(config.url, {
@@ -41,19 +41,19 @@ export const init = (config: MonitorConfig) => {
             clearCache()
         }
     }
-
+    // 缓存数据信息，或者向服务端上报
     report = (data, lazy = true) => {
         addCache(data)
         if (!lazy) {
             send()
         }
     }
-
+    // 设置定时器轮询,定时向服务端上报信息
     const reportInterval = config.reportInterval ?? 1000 * 60
     setInterval(send, reportInterval)
 
     window.addEventListener('beforeunload', send, true)
-
+    // 挂载错误监听等事件,并将report作为其处理方法
     load(report)
 
     console.log('Web Monitor started!')

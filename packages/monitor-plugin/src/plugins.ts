@@ -1,4 +1,5 @@
 import { ReportData } from './cache'
+import { performanceMonitor } from './perfomance'
 
 export default function load(report: (data: ReportData, lazy?: boolean) => void) {
     // 监控 js 错误
@@ -42,5 +43,14 @@ export default function load(report: (data: ReportData, lazy?: boolean) => void)
             }
         },
         true
+    )
+
+    // 性能指标
+    window.addEventListener('load', () => {
+            console.log(performanceMonitor.getAllAPIs());
+            report({
+                DOMCompleteTime: performanceMonitor.getDOMCompleteTime()
+            }, true);
+        }
     )
 }

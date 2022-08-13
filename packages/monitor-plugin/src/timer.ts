@@ -18,4 +18,4 @@ if (window.requestIdleCallback) {
     }
 }
 
-export { setTimer, clearTimer }
+export { setTimer, clearTimer,}
