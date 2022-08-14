@@ -45,11 +45,16 @@ export default function load(report: (data: ReportData, lazy?: boolean) => void)
         true
     )
 
-    // 性能指标
+    // 基础性能指标
     window.addEventListener('load', () => {
-            console.log(performanceMonitor.getAllAPIs());
+            // console.log(performanceMonitor.showAllApis());
             report({
-                DOMCompleteTime: performanceMonitor.getDOMCompleteTime()
+                DOMCompleteTime: performanceMonitor.getDOMCompleteTime(),
+                FPTime: performanceMonitor.getFirstPaintTime(),
+                FCPTime: performanceMonitor.getFirstContentPaintTime(),
+                FMPTime: '',
+                DNSTime: performanceMonitor.getDNSTime(),
+
             }, true);
         }
     )
