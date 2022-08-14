@@ -6,6 +6,7 @@
 // 首屏加载的数据在load事件中触发，
 // 其他性能指标根据需求选择性调用方法获取
 // TODO: 完善下述方法
+// import { pageStartTime,pageEndTime } from './index'
 export const performanceMonitor = {
     // 仅在开发环境下启用这个方法
     showAllApis: () => {
@@ -53,7 +54,8 @@ export const performanceMonitor = {
     },
     // 白屏时间
     getWhiteScreenTime: () => {
-        return ;
+        const whiteScreenTime = window.pageEndTime-window.pageStartTime;
+        return whiteScreenTime;
     },
     // 关键请求用时
     getRequestBlockTime: (request?: any) => {

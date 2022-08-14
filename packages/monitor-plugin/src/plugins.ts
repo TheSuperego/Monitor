@@ -53,9 +53,10 @@ export default function load(report: (data: ReportData, lazy?: boolean) => void)
                 FPTime: performanceMonitor.getFirstPaintTime(),
                 FCPTime: performanceMonitor.getFirstContentPaintTime(),
                 FMPTime: '',
+                FWPTime: performanceMonitor.getWhiteScreenTime(),
                 DNSTime: performanceMonitor.getDNSTime(),
 
-            }, true);
+            }, false);
         }
     )
 }
