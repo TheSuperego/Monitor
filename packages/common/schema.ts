@@ -10,8 +10,17 @@ export interface Schema {
  * ConsoleError
  */
 export interface ConsoleError {
-    errData: string[]
-    pageURL: string
+    /**
+     * 错误数据，传递给 console.error 的参数 ...args
+     */
+    errorData: string[]
+    /**
+     * 页面链接
+     */
+    href: string
+    /**
+     * 发生时间
+     */
     startTime: number
 }
 
@@ -19,11 +28,29 @@ export interface ConsoleError {
  * JsError
  */
 export interface JsError {
+    /**
+     * 列号
+     */
     column: number
-    error: string
+    /**
+     * 页面链接
+     */
+    href: string
+    /**
+     * 行号
+     */
     line: number
-    msg: string
-    pageURL: string
+    /**
+     * 错误信息
+     */
+    message: string
+    /**
+     * 错误堆栈
+     */
+    stack: string
+    /**
+     * 发生时间，ms
+     */
     startTime: number
 }
 
@@ -31,11 +58,17 @@ export interface JsError {
  * PromiseError
  */
 export interface PromiseError {
-    pageURL: string
     /**
-     * PromiseRejectionEvent.reason?.stack
+     * 页面链接
      */
-    reason: null | string
+    href: string
+    /**
+     * 错误堆栈
+     */
+    stack: string
+    /**
+     * 发生时间，ms
+     */
     startTime: number
 }
 
@@ -44,16 +77,25 @@ export interface PromiseError {
  */
 export interface ResourceError {
     /**
-     * target.outerHTML
+     * 页面链接
+     */
+    href: string
+    /**
+     * html代码，target.outerHTML
      */
     html: string
-    pageURL: string
-    resourceType: string
-    startTime: number
     /**
-     * target.src || target.href
+     * 资源类型，target.tagName
      */
-    url: string
+    resourceType: string
+    /**
+     * 资源来源，target.src || target.href
+     */
+    source: string
+    /**
+     * 发生时间，ms
+     */
+    startTime: number
 }
 
 /**
