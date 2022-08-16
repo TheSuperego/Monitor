@@ -1,5 +1,6 @@
 import { Schema } from '../../common/schema'
 import { performanceMonitor } from './perfomance'
+import { mixinBefore } from './utils'
 
 export default function load(
     report: <T extends keyof Schema>(type: T, data: Schema[T], lazy?: boolean) => void
@@ -10,16 +11,43 @@ export default function load(
             report(
                 'jsError',
                 {
-                    msg: e.error.message,
+                    message: e.error.message,
                     line: e.error.lineNumber,
                     column: e.error.columnNumber,
-                    error: e.error.stack,
-                    pageURL: e.error.fileName,
+                    stack: e.error.stack,
+                    href: e.error.fileName,
                     startTime: e.timeStamp,
                 },
                 false
             )
         }
+    })
+
+    // 监控 Promise 错误
+    window.addEventListener('unhandledrejection', (e) => {
+        console.log(e)
+        report(
+            'promiseError',
+            {
+                stack: e.reason.stack,
+                href: e.reason.fileName,
+                startTime: e.timeStamp,
+            },
+            false
+        )
+    })
+
+    // 监控 console.error
+    mixinBefore(window.console, 'error', (...args: string[]) => {
+        report(
+            'consoleError',
+            {
+                href: window.location.href,
+                startTime: performance.now(),
+                errorData: args,
+            },
+            false
+        )
     })
 
     // 监控资源异常
@@ -31,15 +59,14 @@ export default function load(
 
             if (target.src || target.href) {
                 console.log(e)
-                const url = target.src || target.href
                 report(
                     'resourceError',
                     {
-                        url,
+                        source: target.src || target.href,
                         startTime: e.timeStamp,
                         html: target.outerHTML,
                         resourceType: target.tagName,
-                        pageURL: window.location.href,
+                        href: window.location.href,
                     },
                     false
                 )
