@@ -1,10 +1,7 @@
+import { ReportData } from '.'
 import { deepCopy } from './utils'
 
 const cache: ReportData[] = []
-
-export interface ReportData {
-    [key: string]: unknown
-}
 
 export function getCache() {
     return deepCopy(cache)

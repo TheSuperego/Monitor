@@ -1,6 +1,7 @@
-import { ReportData, addCache, getCache, clearCache, isCacheEmpty } from './cache'
+import { addCache, getCache, clearCache, isCacheEmpty } from './cache'
 import { randomUUID } from './utils'
 import load from './plugins'
+import { Schema } from '../../common/schema';
 
 const originalXMLSend = XMLHttpRequest.prototype.send
 const sendFunction: (url: string, data: BoxedReportData) => void = window.navigator?.sendBeacon
@@ -11,7 +12,8 @@ const sendFunction: (url: string, data: BoxedReportData) => void = window.naviga
           originalXMLSend.call(xhr, JSON.stringify(data))
       }
 
-export { ReportData }
+export type ReportData = Schema[keyof Schema]
+
 export interface MonitorConfig {
     url: string
     reportInterval?: number
@@ -21,7 +23,7 @@ export interface BoxedReportData {
     data: ReportData[]
 }
 
-export let report: (data: ReportData, lazy?: boolean) => void
+export let report: <T extends keyof Schema>(type: T, data: Schema[T], lazy?: boolean) => void
 
 export const init = (config: MonitorConfig) => {
     if (!config.url) {
@@ -42,7 +44,7 @@ export const init = (config: MonitorConfig) => {
         }
     }
     // 缓存数据信息，或者向服务端上报
-    report = (data, lazy = true) => {
+    report = (type, data, lazy = true) => {
         addCache(data)
         if (!lazy) {
             send()

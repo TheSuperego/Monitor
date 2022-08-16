@@ -1,11 +1,14 @@
-import { ReportData } from './cache'
+import { Schema } from '../../common/schema'
 import { performanceMonitor } from './perfomance'
 
-export default function load(report: (data: ReportData, lazy?: boolean) => void) {
+export default function load(
+    report: <T extends keyof Schema>(type: T, data: Schema[T], lazy?: boolean) => void
+) {
     // 监控 js 错误
     window.addEventListener('error', (e) => {
         if (e.error) {
             report(
+                'jsError',
                 {
                     msg: e.error.message,
                     line: e.error.lineNumber,
@@ -27,12 +30,12 @@ export default function load(report: (data: ReportData, lazy?: boolean) => void)
             if (!target) return
 
             if (target.src || target.href) {
+                console.log(e)
                 const url = target.src || target.href
                 report(
+                    'resourceError',
                     {
                         url,
-                        type: 'error',
-                        subType: 'resource',
                         startTime: e.timeStamp,
                         html: target.outerHTML,
                         resourceType: target.tagName,
