@@ -3,21 +3,21 @@ import { performanceMonitor } from './perfomance'
 
 export default function load(report: (data: ReportData, lazy?: boolean) => void) {
     // 监控 js 错误
-    window.onerror = (msg, url, line, column, error) => {
-        report(
-            {
-                msg,
-                line,
-                column,
-                error: error?.stack,
-                subType: 'js',
-                pageURL: url,
-                type: 'error',
-                startTime: performance.now(),
-            },
-            false
-        )
-    }
+    window.addEventListener('error', (e) => {
+        if (e.error) {
+            report(
+                {
+                    msg: e.error.message,
+                    line: e.error.lineNumber,
+                    column: e.error.columnNumber,
+                    error: e.error.stack,
+                    pageURL: e.error.fileName,
+                    startTime: e.timeStamp,
+                },
+                false
+            )
+        }
+    })
 
     // 监控资源异常
     window.addEventListener(
