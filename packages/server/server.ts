@@ -1,8 +1,7 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-const Koa = require('koa')
-const Router = require('@koa/router')
-const cors = require('@koa/cors')
-const koaBody = require('koa-body')
+import Koa from 'koa'
+import Router from '@koa/router'
+import cors from '@koa/cors'
+import koaBody from 'koa-body'
 
 const app = new Koa()
 app.use(koaBody())
@@ -16,11 +15,11 @@ app.use(
 
 const router = new Router()
 
-router.get('/', async (ctx: any) => {
+router.get('/', async (ctx) => {
 	ctx.body = 'qaq'
 })
 
-router.post('/report', async (ctx: any) => {
+router.post('/report', async (ctx) => {
 	const body = ctx.request.body
 	console.log(body)
 
