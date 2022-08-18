@@ -9,4 +9,5 @@ export function ff(dispose: () => void) {
 export function fade() {
     fades.forEach((f) => f())
     fades.length = 0
+    console.log('Web Monitor faded🥀')
 }
