@@ -1,11 +1,13 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const Koa = require('koa')
-const Router = require('@koa/router')
+
 const cors = require('@koa/cors')
 const koaBody = require('koa-body')
 
 const app = new Koa()
+
 app.use(koaBody())
+
 app.use(
 	cors({
 		origin: '*',
@@ -14,20 +16,12 @@ app.use(
 	})
 )
 
-const router = new Router()
+import router  from "./router";
 
-router.get('/', async (ctx: any) => {
-	ctx.body = 'qaq'
-})
+const PORT = 9000
 
-router.post('/report', async (ctx: any) => {
-	const body = ctx.request.body
-	console.log(body)
+app.use(router.routes(), router.allowedMethods())
 
-	ctx.status = 204
-})
-
-app.use(router.routes())
-app.listen(9000, () => {
-	console.log(`Server start on http://localhost:9000`)
+app.listen(PORT, () => {
+	console.log(`Server start on http://localhost:${PORT}/`)
 })

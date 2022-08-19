@@ -5,6 +5,7 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
+		"dev": "pnpm -F \"manage-system\" dev",
 		"test": "pnpm -F \"monitor-plugin\" build & pnpm -F \"server\" start"
 	},
 	"keywords": [],

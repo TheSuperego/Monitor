@@ -25,11 +25,11 @@ export default defineConfig({
     },
   },
   server: {
-    host: true,
+    host: 'localhost',
     port: 3000,
     proxy: {
       '/api': {
-        target: 'http://127.0.0.1:8000/',
+        target: 'http://localhost:9000/',
         changeOrigin: false,
         ws: false,
         rewrite: (pathStr) => pathStr.replace('/api', ''),
