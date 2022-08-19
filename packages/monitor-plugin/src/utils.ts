@@ -1,3 +1,5 @@
+import { ff } from "./fade"
+
 export function deepCopy<T>(obj: T): T {
     return JSON.parse(JSON.stringify(obj))
 }
@@ -15,7 +17,30 @@ export function mixinBefore<
         fn(args)
         return origin.apply(parentObject, args)
     }) as any
-    return function restore() {
+    ff(() => {
         parentObject[propertyName] = origin
-    }
+    })
+}
+
+type EventTargetMap<T> = T extends Window
+    ? WindowEventMap
+    : T extends Document
+    ? DocumentEventMap
+    : never
+
+export function addEventListener<T extends EventTarget, TYPE extends string>(
+    eventTarget: T,
+    type: TYPE,
+    listener: (EventTargetMap<T> extends [never]
+        ? EventListenerOrEventListenerObject
+        : TYPE extends keyof EventTargetMap<T>
+        ? (this: T, ev: EventTargetMap<T>[TYPE]) => unknown
+        : EventListenerOrEventListenerObject) &
+        EventListenerOrEventListenerObject,
+    options?: boolean | AddEventListenerOptions
+) {
+    eventTarget.addEventListener(type, listener, options)
+    ff(() => {
+        eventTarget.removeEventListener(type, listener, options)
+    })
 }

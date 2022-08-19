@@ -1,12 +1,12 @@
 import { Schema } from '../../common/schema'
 import { performanceMonitor } from './perfomance'
-import { mixinBefore } from './utils'
+import { mixinBefore, addEventListener } from './utils'
 
 export default function load(
     report: <T extends keyof Schema>(type: T, data: Schema[T], lazy?: boolean) => void
 ) {
     // 监控 js 错误
-    window.addEventListener('error', (e) => {
+    addEventListener(window, 'error', (e) => {
         if (e.error) {
             report(
                 'jsError',
@@ -24,7 +24,7 @@ export default function load(
     })
 
     // 监控 Promise 错误
-    window.addEventListener('unhandledrejection', (e) => {
+    addEventListener(window, 'unhandledrejection', (e) => {
         console.log(e)
         report(
             'promiseError',
@@ -51,7 +51,8 @@ export default function load(
     })
 
     // 监控资源异常
-    window.addEventListener(
+    addEventListener(
+        window,
         'error',
         (e) => {
             const target = e.target as HTMLImageElement & HTMLBaseElement
@@ -76,11 +77,13 @@ export default function load(
     )
 
     // 性能指标
-    window.addEventListener('load', () => {
-            console.log(performanceMonitor.getAllAPIs());
-            report({
-                DOMCompleteTime: performanceMonitor.getDOMCompleteTime()
-            }, true);
-        }
-    )
+    addEventListener(window, 'load', () => {
+        console.log(performanceMonitor.getAllAPIs())
+        report(
+            {
+                DOMCompleteTime: performanceMonitor.getDOMCompleteTime(),
+            },
+            true
+        )
+    })
 }
