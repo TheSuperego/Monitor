@@ -1,8 +1,10 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-const Koa = require('koa')
 
-const cors = require('@koa/cors')
-const koaBody = require('koa-body')
+/* eslint-disable @typescript-eslint/no-var-requires */
+
+import Koa from 'koa'
+import Router from '@koa/router'
+import cors from '@koa/cors'
+import koaBody from 'koa-body'
 
 const app = new Koa()
 
@@ -18,9 +20,10 @@ app.use(
 
 import router  from "./router";
 
+
 const PORT = 9000
 
-app.use(router.routes(), router.allowedMethods())
+app.use(router.routes())
 
 app.listen(PORT, () => {
 	console.log(`Server start on http://localhost:${PORT}/`)
