@@ -58,22 +58,24 @@ importers:
       '@koa/cors': ^3.3.0
       '@koa/router': ^12.0.0
       '@types/koa': ^2.13.5
-      '@types/koa-bodyparser': ^4.3.7
       '@types/koa__cors': ^3.3.0
       '@types/koa__router': ^8.0.11
+      '@types/koa-bodyparser': ^4.3.7
       esbuild: ^0.14.53
       koa: ^2.13.4
       koa-body: ^5.0.0
+      ws: ^8.8.1
     dependencies:
       '@koa/cors': 3.3.0
       '@koa/router': 12.0.0
       koa: 2.13.4
       koa-body: 5.0.0
+      ws: 8.8.1
     devDependencies:
       '@types/koa': 2.13.5
-      '@types/koa-bodyparser': 4.3.7
       '@types/koa__cors': 3.3.0
       '@types/koa__router': 8.0.11
+      '@types/koa-bodyparser': 4.3.7
       esbuild: 0.14.53
 
 packages:
@@ -2352,6 +2354,19 @@ packages:
 
   /wrappy/1.0.2:
     resolution: {integrity: sha512-l4Sp/DRseor9wL6EvV2+TuQn63dMkPjZ/sp9XkghTEbV9KlPS1xUsZ3u7/IQO4wxtcFB4bgpQPRcR3QCvezPcQ==}
+
+  /ws/8.8.1:
+    resolution: {integrity: sha512-bGy2JzvzkPowEJV++hF07hAD6niYSr0JzBNo/J29WsB57A2r7Wlc1UFcTR9IzrPvuNVO4B8LGqF8qcpsVOhJCA==}
+    engines: {node: '>=10.0.0'}
+    peerDependencies:
+      bufferutil: ^4.0.1
+      utf-8-validate: ^5.0.2
+    peerDependenciesMeta:
+      bufferutil:
+        optional: true
+      utf-8-validate:
+        optional: true
+    dev: false
 
   /yaml/1.10.2:
     resolution: {integrity: sha512-r3vXyErRCYJ7wg28yvBY5VSoAF8ZvlcW9/BwUzEtUsjvX/DKs24dIkuwjtuprwJJHsbyUbLApepYTR1BN4uHrg==}
