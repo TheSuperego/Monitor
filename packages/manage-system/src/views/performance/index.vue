@@ -1,5 +1,6 @@
 <template>
-    <div>
+<div>
+<div>
         {{ perf_obj }}
     </div>
 
@@ -10,7 +11,7 @@
     <div>
         首次内容绘制时间 {{ format_time(perf_obj.fcp.durationTime) }}
     </div>
-
+</div>
 </template>
 
 <script lang='ts' setup>
@@ -22,7 +23,8 @@ import EChart from '../../components/EChart.vue'
 import { ElMessage } from 'element-plus'
 import { AxiosError } from 'axios'
 import { PerformanceObject } from '../../types'
-
+import sockets from '../../api/tool/socket'
+sockets();
 const option = {
     xAxis: {
         type: 'category',

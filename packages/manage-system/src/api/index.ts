@@ -7,6 +7,6 @@ const request = axios.create({
     baseURL: 'https://mock.apifox.cn/m1/1398177-0-default', // 401
     headers: { 'apifoxToken' : 'lYbT3i6QXL13rzJzPnENoOcKOIeCRtsC' } // token
 })
-
+var ws= new WebSocket("");
 
 export default request;

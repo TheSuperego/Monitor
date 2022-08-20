@@ -1,3 +1,4 @@
+//@ts-check
 const Router = require('@koa/router')
 
 const router = new Router()
@@ -12,5 +13,4 @@ router.post('/report', async (ctx: any) => {
 
 	ctx.status = 204
 })
-
 export default router
