@@ -1,5 +1,5 @@
 {
-  "name": "monitor-fronted",
+  "name": "manage-system",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -10,7 +10,6 @@
   },
   "dependencies": {
     "@types/node": "^18.6.3",
-    "axios": "^0.27.2",
     "echarts": "^5.3.3",
     "element-plus": "^2.2.12",
     "pinia": "^2.0.17",
@@ -22,6 +21,7 @@
     "@types/echarts": "^4.9.16",
     "@types/node": "^18.6.2",
     "@vitejs/plugin-vue": "^3.0.1",
+    "axios": "^0.27.2",
     "typescript": "^4.6.4",
     "vite": "^3.0.0",
     "vitest": "^0.20.3",

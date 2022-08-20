@@ -1,42 +1,73 @@
-import { ReportData } from './cache'
+import { Schema } from '../../common/schema'
 import { performanceMonitor } from './perfomance'
+import { mixinBefore, addEventListener } from './utils'
 
-export default function load(report: (data: ReportData, lazy?: boolean) => void) {
+export default function load(
+    report: <T extends keyof Schema>(type: T, data: Schema[T], lazy?: boolean) => void
+) {
     // 监控 js 错误
-    window.onerror = (msg, url, line, column, error) => {
+    addEventListener(window, 'error', (e: any) => {
+        if (e.error) {
+            report(
+                'jsError',
+                {
+                    message: e.error.message,
+                    line: e.error.lineNumber,
+                    column: e.error.columnNumber,
+                    stack: e.error.stack,
+                    href: e.error.fileName,
+                    startTime: e.timeStamp,
+                },
+                false
+            )
+        }
+    })
+
+    // 监控 Promise 错误
+    addEventListener(window, 'unhandledrejection', (e: any) => {
+        console.log(e)
         report(
+            'promiseError',
             {
-                msg,
-                line,
-                column,
-                error: error?.stack,
-                subType: 'js',
-                pageURL: url,
-                type: 'error',
-                startTime: performance.now(),
+                stack: e.reason.stack,
+                href: e.reason.fileName,
+                startTime: e.timeStamp,
             },
             false
         )
-    }
+    })
+
+    // 监控 console.error
+    mixinBefore(window.console, 'error', (...args: any) => {
+        report(
+            'consoleError',
+            {
+                href: window.location.href,
+                startTime: performance.now(),
+                errorData: args,
+            },
+            false
+        )
+    })
 
     // 监控资源异常
-    window.addEventListener(
+    addEventListener(
+        window,
         'error',
-        (e) => {
+        (e: any) => {
             const target = e.target as HTMLImageElement & HTMLBaseElement
             if (!target) return
 
             if (target.src || target.href) {
-                const url = target.src || target.href
+                console.log(e)
                 report(
+                    'resourceError',
                     {
-                        url,
-                        type: 'error',
-                        subType: 'resource',
+                        source: target.src || target.href,
                         startTime: e.timeStamp,
                         html: target.outerHTML,
                         resourceType: target.tagName,
-                        pageURL: window.location.href,
+                        href: window.location.href,
                     },
                     false
                 )
@@ -56,7 +87,7 @@ export default function load(report: (data: ReportData, lazy?: boolean) => void)
                 FWPTime: performanceMonitor.getWhiteScreenTime(),
                 DNSTime: performanceMonitor.getDNSTime(),
 
-            }, false);
+            } as any, false);
         }
     )
 }

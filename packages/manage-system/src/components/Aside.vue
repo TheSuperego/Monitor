@@ -5,12 +5,13 @@
     <button> 折叠 </button>
     <el-menu default-active="/homepage" class="el-menu-demo"
         :collapse="is_collapse" :ellipsis="false" :router="true" :border-bottom="null" @select="handle_select">
-        <el-menu-item index="/homepage">Home</el-menu-item>
-        <el-menu-item index="/aboutpage">About</el-menu-item>
+        <el-menu-item index="/homepage">主页</el-menu-item>
+        <el-menu-item index="/aboutpage">网站详情</el-menu-item>
         <el-menu-item index="/chart">Chart</el-menu-item>
         <el-menu-item index="/echo">Echo</el-menu-item>
         <el-menu-item index="/console">Console</el-menu-item>
-        <el-menu-item index="/performance">Performance</el-menu-item>
+        <el-menu-item index="/performance">性能监控</el-menu-item>
+        <el-menu-item index="/error">错误监控</el-menu-item>
         <div class="flex-grow"> </div>
     </el-menu>
     </div>

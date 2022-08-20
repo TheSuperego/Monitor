@@ -1,15 +1,21 @@
+
+
 import request from "./index";
 
-export function echo(params: any) {
+
+import api_get from "./get";
+import api_report from "./report";
+import api_tool from "./tool";
+
+
+export function echo() {
     return request({
-        url: "/get/",
-        method: "get",
-        params,
+        url: "/",
+        method: "get"
     });
 }
 
-
-export function api_report(params: any) {
+export function api_test_report(params: any) {
     return request({
         url: "/report/",
         method: "post",
@@ -18,10 +24,19 @@ export function api_report(params: any) {
 }
 
 
-export function api_get(params: any) {
+export function api_test_get(params: any) {
     return request({
         url: "/get/",
         method: "get",
         params,
     });
 }
+
+
+const service = {
+    api_get,
+    api_report,
+    api_tool
+}
+
+export default service;
