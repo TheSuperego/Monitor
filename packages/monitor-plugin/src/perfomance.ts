@@ -48,6 +48,44 @@ export const performanceMonitor = {
     getDOMCompleteTime: () => {
         const [{ domComplete }] = performance.getEntriesByType('navigation');
         return domComplete;
+    },
+    // 最大卡顿时间
+    getMaxBlockTime: () => {
+        return ;
+    },
+    // 白屏时间
+    getWhiteScreenTime: () => {
+        const whiteScreenTime = window.pageEndTime-window.pageStartTime;
+        return whiteScreenTime;
+    },
+    // 关键请求用时
+    getRequestBlockTime: (request?: any) => {
+        return ;
+    },
+    // 请求成功率（？）
+    getRequestSuccessRate: (request?: any) => {
+        // 两种方案：
+        // 一是根据当前请求用时,人为的给出一个阶梯函数概率
+        // 比如请求用时0ms时概率100%，请求用时2ms时概率98%，请求用时2s时概率50%，请求20s时概率0
+        // 二是基于统计学，统计每次请求，把数据交给服务端，从服务端获取概率
+        return 1;
+    },
+    // 重定向时间
+    getRedirectTime: () => {
+        return ;
+    },
+    // DNS解析时间
+    getDNSTime: () => {
+        const [{ domainLookupEnd, domainLookupStart }] = performance.getEntriesByType('navigation');
+        return domainLookupEnd - domainLookupStart;
+    },
+    // 资源加载时间
+    getLoadingTime: () => {
+
+    },
+    // http请求次数
+    getHttpRequestTimes: () => {
+
     }
 
     // 欢迎补充其他指标owo:

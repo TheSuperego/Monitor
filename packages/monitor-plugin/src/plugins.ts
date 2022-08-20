@@ -6,7 +6,7 @@ export default function load(
     report: <T extends keyof Schema>(type: T, data: Schema[T], lazy?: boolean) => void
 ) {
     // 监控 js 错误
-    addEventListener(window, 'error', (e) => {
+    addEventListener(window, 'error', (e: any) => {
         if (e.error) {
             report(
                 'jsError',
@@ -24,7 +24,7 @@ export default function load(
     })
 
     // 监控 Promise 错误
-    addEventListener(window, 'unhandledrejection', (e) => {
+    addEventListener(window, 'unhandledrejection', (e: any) => {
         console.log(e)
         report(
             'promiseError',
@@ -38,7 +38,7 @@ export default function load(
     })
 
     // 监控 console.error
-    mixinBefore(window.console, 'error', (...args: string[]) => {
+    mixinBefore(window.console, 'error', (...args: any) => {
         report(
             'consoleError',
             {
@@ -54,7 +54,7 @@ export default function load(
     addEventListener(
         window,
         'error',
-        (e) => {
+        (e: any) => {
             const target = e.target as HTMLImageElement & HTMLBaseElement
             if (!target) return
 
@@ -87,7 +87,7 @@ export default function load(
             FWPTime: performanceMonitor.getWhiteScreenTime(),
             DNSTime: performanceMonitor.getDNSTime(),
 
-        }, false);
-    }
-)
+            } as any, false);
+        }
+    )
 }

@@ -58,9 +58,14 @@ export const init = (config: MonitorConfig) => {
 
     // 设置定时器轮询,定时向服务端上报信息
     const reportInterval = config.reportInterval ?? 1000 * 60
-    setInterval(send, reportInterval)
+    const timer = setInterval(send, reportInterval)
+    ff(() => {
+        clearInterval(timer)
+        send()
+    })
 
-    window.addEventListener('beforeunload', send, true)
+    addEventListener(window, 'beforeunload', send, true)
+    
     // 挂载错误监听等事件,并将report作为其处理方法
     load(report)
     //设置白屏时间结束时间点（由于时间太小所以设置了一个延时函数用于区别）
