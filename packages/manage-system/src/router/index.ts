@@ -39,10 +39,16 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('../views/chart/index.vue'),
     },
     {
-         // 04. 性能
+         // 05. 性能
          path: "/performance",
          name: "Performance",
          component: () => import('../views/performance/index.vue'),
+    },
+    {
+        // 06. 错误
+        path: "/error",
+        name: "Error",
+        component: () => import('../views/error/index.vue'),
     }
 ];
 

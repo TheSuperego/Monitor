@@ -11,6 +11,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "esModuleInterop": true,
+    "experimentalDecorators": true, // 开启装饰器
     "lib": [
       "ESNext",
       "DOM"

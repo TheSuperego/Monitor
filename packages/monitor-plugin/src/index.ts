@@ -1,6 +1,8 @@
-import { ReportData, addCache, getCache, clearCache, isCacheEmpty } from './cache'
-import { randomUUID } from './utils'
+import { addCache, getCache, clearCache, isCacheEmpty } from './cache'
+import { randomUUID, addEventListener } from './utils'
 import load from './plugins'
+import { Schema } from '../../common/schema'
+import { ff } from './fade'
 
 declare const window: Window & { pageStartTime: any,pageEndTime:any };
 const originalXMLSend = XMLHttpRequest.prototype.send
@@ -12,7 +14,8 @@ const sendFunction: (url: string, data: BoxedReportData) => void = window.naviga
           originalXMLSend.call(xhr, JSON.stringify(data))
       }
 
-export { ReportData }
+export type ReportData = Schema[keyof Schema]
+
 export interface MonitorConfig {
     url: string
     reportInterval?: number
@@ -22,7 +25,7 @@ export interface BoxedReportData {
     data: ReportData[]
 }
 
-export let report: (data: ReportData, lazy?: boolean) => void
+export let report: <T extends keyof Schema>(type: T, data: Schema[T], lazy?: boolean) => void
 
 export const init = (config: MonitorConfig) => {
     if (!config.url) {
@@ -38,22 +41,25 @@ export const init = (config: MonitorConfig) => {
         if (!isCacheEmpty()) {
             sendFunction(config.url, {
                 sessionId,
-                data: getCache()
+                data: getCache(),
             })
 
             clearCache()
         }
     }
+
     // 缓存数据信息，或者向服务端上报
-    report = (data, lazy = true) => {
+    report = (type, data, lazy = true) => {
         addCache(data)
         if (!lazy) {
             send()
         }
     }
+
     // 设置定时器轮询,定时向服务端上报信息
     const reportInterval = config.reportInterval ?? 1000 * 60
     setInterval(send, reportInterval)
+
     window.addEventListener('beforeunload', send, true)
     // 挂载错误监听等事件,并将report作为其处理方法
     load(report)
@@ -63,3 +69,5 @@ export const init = (config: MonitorConfig) => {
     console.log('Web Monitor started!')
    
 }
+
+export { fade } from './fade'
